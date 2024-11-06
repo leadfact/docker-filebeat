@@ -1,0 +1,27 @@
+setup.template.enabled: true
+setup.template.name: "go-app-logs"
+setup.template.pattern: "go-app-logs-*"
+
+filebeat.inputs:
+  - type: filestream
+    enabled: true
+    paths:
+      - /src/logs/*.log
+    # Specify a unique ID for the input, helpful for monitoring
+    id: "go-app-logs"
+    # Configure multiline if needed for ECS-structured logs.
+    multiline:
+      pattern: '^{'
+      negate: true
+      match: after
+
+output.logstash:
+  enabled: true
+  index: "go-app-logs-%{+yyyy.MM.dd}"
+  hosts: ["46.101.127.176:5044"]
+  ssl.enabled: true
+  ssl.certificate_authorities: [ "/usr/share/filebeat/certs/logstash.crt" ]
+
+json:
+  message_key: message
+  keys_under_root: true
