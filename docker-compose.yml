@@ -18,3 +18,5 @@ services:
     command: filebeat -e -strict.perms=false
     volumes:
       - ./logs:/src/logs
+    env_file:
+      - .env

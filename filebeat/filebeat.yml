@@ -18,7 +18,7 @@ filebeat.inputs:
 output.logstash:
   enabled: true
   index: "go-app-logs-%{+yyyy.MM.dd}"
-  hosts: ["46.101.127.176:5044"]
+  hosts: ["${LOGSTASH_HOST}"]
   ssl.enabled: true
   ssl.certificate_authorities: [ "/usr/share/filebeat/certs/logstash.crt" ]
 
